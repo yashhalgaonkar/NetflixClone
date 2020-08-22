@@ -3,6 +3,7 @@ import 'package:flutter_netflix_responsive_ui/widgets/widgets.dart';
 
 import '../data/data.dart';
 import '../data/data.dart';
+import '../data/data.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -54,12 +55,28 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPadding(
             padding: const EdgeInsets.only(top: 20.0),
             sliver: SliverToBoxAdapter(
-              child: Preview(
+              child: Previews(
                 title: 'Previews',
                 contentList: previews,
               ),
             ),
-          )
+          ),
+          SliverToBoxAdapter(
+            child: ContentList(title: "My List", contentList: myList),
+          ),
+          SliverToBoxAdapter(
+            child: ContentList(
+              title: "Netflix Originals",
+              isOriginal: true,
+              contentList: myList,
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            sliver: SliverToBoxAdapter(
+              child: ContentList(title: "Trending", contentList: myList),
+            ),
+          ),
         ],
       ),
     );
