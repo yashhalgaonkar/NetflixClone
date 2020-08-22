@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_netflix_responsive_ui/widgets/widgets.dart';
 
 import '../data/data.dart';
-import '../data/data.dart';
-import '../data/data.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -42,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.cast),
         onPressed: () => print('Cast'),
       ),
+
+      //*custom app bar
       appBar: PreferredSize(
         preferredSize: Size(screenSize.width, 50.0),
         child: CustomAppBar(scrollOffset: _scrollOffset),
@@ -49,32 +50,49 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
+          //* content header
           SliverToBoxAdapter(
             child: ContentHeader(featuredContent: sintelContent),
           ),
+
+          //*Preview List
           SliverPadding(
             padding: const EdgeInsets.only(top: 20.0),
             sliver: SliverToBoxAdapter(
               child: Previews(
+                key: PageStorageKey('previews'),
                 title: 'Previews',
                 contentList: previews,
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: ContentList(title: "My List", contentList: myList),
-          ),
+
+          //*My List
           SliverToBoxAdapter(
             child: ContentList(
+                key: PageStorageKey('myList'),
+                title: "My List",
+                contentList: myList),
+          ),
+
+          //*Originals List
+          SliverToBoxAdapter(
+            child: ContentList(
+              key: PageStorageKey('NetflixOriginals'),
               title: "Netflix Originals",
               isOriginal: true,
               contentList: myList,
             ),
           ),
+
+          //*trending list
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 20.0),
             sliver: SliverToBoxAdapter(
-              child: ContentList(title: "Trending", contentList: myList),
+              child: ContentList(
+                  key: PageStorageKey('trendingList'),
+                  title: "Trending",
+                  contentList: myList),
             ),
           ),
         ],
